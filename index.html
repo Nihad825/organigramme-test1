@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEST | Organigrammes</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">T</div>
+        <div>
+          <strong>TEST</strong>
+          <small>Organigramme Studio</small>
+        </div>
+      </div>
+
+      <div class="side-label">ESPACE DE TRAVAIL</div>
+      <div class="nav-active">◈ &nbsp; Organigrammes</div>
+
+      <div class="team-heading">
+        <strong>Collaborateurs</strong>
+        <span id="teamCount">0</span>
+      </div>
+
+      <div id="teamList" class="team-list"></div>
+
+      <button id="sidebarAdd" class="side-add" type="button">
+        + Ajouter une personne
+      </button>
+
+      <div class="save-status">
+        <span class="green-dot"></span>
+        Sauvegarde automatique
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <div>
+          <div class="breadcrumb">TEST</div>
+          <h1>Mes organigrammes</h1>
+          <p>Créez et organisez vos équipes facilement.</p>
+        </div>
+
+        <div class="header-actions">
+          <button id="exportBtn" class="btn btn-light" type="button">
+            ↓ Exporter PNG
+          </button>
+          <button id="addBtn" class="btn btn-primary" type="button">
+            + Ajouter une personne
+          </button>
+        </div>
+      </header>
+
+      <section class="projects">
+        <div class="project-top">
+          <div id="projectTabs" class="project-tabs"></div>
+          <button id="newProjectBtn" class="btn btn-primary" type="button">
+            + Nouvel organigramme
+          </button>
+        </div>
+
+        <div class="project-actions">
+          <button id="renameProjectBtn" class="btn btn-light" type="button">
+            ✎ Renommer
+          </button>
+          <button id="clearProjectBtn" class="btn btn-warning" type="button">
+            Tout vider
+          </button>
+          <button id="deleteProjectBtn" class="btn btn-danger" type="button">
+            Supprimer l'onglet
+          </button>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="workspace-heading">
+          <div class="workspace-name">
+            <span class="green-dot"></span>
+            <strong id="currentProjectName">Entreprise</strong>
+          </div>
+          <span id="nodeCount">0 collaborateurs</span>
+        </div>
+
+        <div id="canvas" class="canvas">
+          <svg id="chart"
+               xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+
+        <div class="zoom-controls">
+          <button id="zoomOut" type="button" title="Dézoomer">−</button>
+          <span id="zoomValue">100%</span>
+          <button id="zoomIn" type="button" title="Zoomer">+</button>
+          <button id="fitBtn" type="button" title="Recentrer">⤢</button>
+        </div>
+
+        <div class="canvas-help">
+          Cliquez sur une carte pour la modifier ·
+          Cliquez sur + pour ajouter sous un responsable
+        </div>
+      </section>
+    </main>
+  </div>
+
+  
+  <div id="personModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="personModalTitle">Ajouter une personne</h2>
+          <p>Choisissez sa place dans l'organigramme.</p>
+        </div>
+        <button id="closePersonModal" class="close-btn"
+                type="button">×</button>
+      </div>
+
+      <form id="personForm">
+        <label for="personName">Nom complet</label>
+        <input id="personName" required maxlength="60"
+               placeholder="Ex : Marie Dupont">
+
+        <label for="personRole">Poste</label>
+        <input id="personRole" required maxlength="60"
+               placeholder="Ex : Responsable marketing">
+
+        <label for="personDept">Département</label>
+        <select id="personDept">
+          <option>Direction</option>
+          <option>Marketing</option>
+          <option>Développement</option>
+          <option>Ressources humaines</option>
+          <option>Commercial</option>
+          <option>Finance</option>
+          <option>Autre</option>
+        </select>
+
+        <label for="personManager">Supérieur hiérarchique</label>
+        <select id="personManager"></select>
+
+        <label for="personPosition">Position dans la branche</label>
+        <select id="personPosition"></select>
+
+        <p class="help-text">
+          Choisissez le responsable, puis la position de gauche
+          à droite parmi ses collaborateurs.
+        </p>
+
+        <div class="modal-actions">
+          <button id="deletePersonBtn" type="button"
+                  class="btn btn-danger hidden">Supprimer</button>
+          <button id="cancelPersonBtn" type="button"
+                  class="btn btn-light">Annuler</button>
+          <button type="submit"
+                  class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FORMULAIRE ORGANIGRAMME -->
+  <div id="projectModal" class="modal hidden">
+    <div class="modal-card small-modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="projectModalTitle">Nouvel organigramme</h2>
+          <p>Donnez un nom à votre espace de travail.</p>
+        </div>
+        <button id="closeProjectModal" class="close-btn"
+                type="button">×</button>
+      </div>
+
+      <form id="projectForm">
+        <label for="projectName">Nom de l'organigramme</label>
+        <input id="projectName" required maxlength="50"
+               placeholder="Ex : Équipe marketing">
+
+        <div class="modal-actions">
+          <button id="cancelProjectBtn" type="button"
+                  class="btn btn-light">Annuler</button>
+          <button type="submit" class="btn btn-primary">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>
